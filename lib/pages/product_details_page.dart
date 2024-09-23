@@ -69,54 +69,14 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ListTile(
                 title: Text('Product: ${productModel.productName}',
                   style: const TextStyle(fontSize: 20),),
-                trailing: IconButton(onPressed: () {
-                  showSingleTextInputButton(
-                      context: context,
-                      keyboardType: TextInputType.number,
-                      title: 'Update Product',
-                      positiveText: 'Update',
-                      onSave: (value) {
-                    productProvider.updateSingleProductField(productModel.id!, 'productName', value);
-                    showMassage(context: context, message: 'Product name updated');
-
-                  },);
-
-                }, icon: const Icon(Icons.edit)),
               ),
               ListTile(
                 title: Text('Price: ${productModel.price}',
                   style: const TextStyle(fontSize: 20),),
-                trailing: IconButton(onPressed: () {
-
-                  showSingleTextInputButton(
-                    context: context,
-                    keyboardType: TextInputType.number,
-                    title: 'Update Price',
-                    positiveText: 'Update',
-                    onSave: (value) {
-                      productProvider.updateSingleProductField(productModel.id!, 'price', num.parse(value));
-                      showMassage(context: context, message: 'Price updated');
-
-                      },
-                  );
-                }, icon: const Icon(Icons.edit)),
               ),
               ListTile(
                 title: Text('Discount: ${productModel.discount}',
                   style: const TextStyle(fontSize: 20),),
-                trailing: IconButton(onPressed: () {
-                  showSingleTextInputButton(
-                    context: context,
-                    keyboardType: TextInputType.number,
-                    title: 'Update discount',
-                    positiveText: 'Update',
-                    onSave: (value) {
-                      productProvider.updateSingleProductField(productModel.id!, 'discount', num.parse(value));
-                      showMassage(context: context, message: 'discount updated');
-
-                    },);
-
-                }, icon: const Icon(Icons.edit)),
               ),
               ListTile(
                 title: Text(
@@ -127,47 +87,23 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ListTile(
                 title: Text('Product discription : ${productModel.description}',
                   style: const TextStyle(fontSize: 17),),
-                trailing: IconButton(onPressed: () {
-
-                  showSingleTextInputButton(
-                    context: context,
-                    keyboardType: TextInputType.number,
-                    title: 'Update discription',
-                    positiveText: 'Update',
-                    onSave: (value) {
-                      productProvider.updateSingleProductField(productModel.id!, 'description', value);
-                      showMassage(context: context, message: 'Driscription updated');
-
-                    },);
-
-                }, icon: const Icon(Icons.edit)),
               ),
               ListTile(
-                title: Text('Stock : ${productModel.stock}',
-                  style: const TextStyle(fontSize: 17),),
-                trailing: IconButton(onPressed: () {
-
-                  showSingleTextInputButton(
-                    context: context,
-                    keyboardType: TextInputType.number,
-                    title: 'Update discription',
-                    positiveText: 'Update',
-                    onSave: (value) {
-                      productProvider.updateSingleProductField(productModel.id!, 'stock', num.parse(value));
-                      showMassage(context: context, message: 'Stock updated');
-
-                    },);
-
-                }, icon: const Icon(Icons.edit)),
+                title: productModel.stock > 0 ? Text('Stock : Available',
+                  style : const TextStyle(fontSize: 17),):
+                Text('Stock : Not Available'),
               ),
               SwitchListTile(
                 title: Text('Product avalable ',
                   style: const TextStyle(fontSize: 17),),
                 value: productModel.available,
                 onChanged: (value) {
-                  productProvider.updateSingleProductField(productModel.id!, 'available', value);
-                  showMassage(context: context, message: 'status updated');
+
                 },
+                // onChanged: (value) {
+                //   productProvider.updateSingleProductField(productModel.id!, 'available', value);
+                //   showMassage(context: context, message: 'status updated');
+                // },
               ),
 
 

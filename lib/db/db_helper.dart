@@ -26,7 +26,7 @@ class DbHelper {
   static Stream<QuerySnapshot<Map<String, dynamic>>>  getAllCategories() =>
       _db.collection(_collectionCategory).orderBy('name').snapshots();
   static Stream<QuerySnapshot<Map<String, dynamic>>>  getAllProducts() =>
-      _db.collection(_collectionProducts).snapshots();
+      _db.collection(_collectionProducts).where('available', isEqualTo: true).snapshots();
 
   static Future<void> updateSingleProductField(String id, String field, dynamic value) async {
     await _db.collection(_collectionProducts).doc(id).update({field: value});
