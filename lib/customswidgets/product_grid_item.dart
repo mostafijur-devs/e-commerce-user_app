@@ -1,0 +1,91 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:user_ecom_app/models/product_model.dart';
+import 'package:user_ecom_app/utils/constant.dart';
+
+class ProductGridItem extends StatelessWidget {
+  const ProductGridItem({super.key, required this.productModel});
+
+  final ProductModel productModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Column(
+        children: [
+          Expanded(
+            child: Stack(
+              children: [
+                CachedNetworkImage(
+                  imageUrl: productModel.imageUrl,
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  height: 220,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Center(
+                    child: Icon(Icons.error),
+                  ),
+                  fadeInDuration: const Duration(milliseconds: 1000),
+                  fadeInCurve: Curves.bounceIn,
+                ),
+                if (productModel.discount > 0)
+                  Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: 70,
+                    color: Colors.black.withOpacity(0.4),
+                    child: Text(
+                      '${productModel.discount}% OFF',
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  )
+              ],
+            ),
+          ),
+          Text(
+            productModel.productName,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          ),
+          const SizedBox(
+            height: 5,
+          ),
+          if (productModel.discount > 0)
+            RichText(
+              text: TextSpan(
+                  text: '$currency ${productModel.priceAfterDiscount}  ',
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: ' ${productModel.price}',
+                      style: const TextStyle(
+                        color: Colors.red,
+                        fontSize: 18.0,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    )
+                  ]),
+            ),
+          if (productModel.discount == 0)
+            Text(
+              '$currency ${productModel.price}',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+              ),
+            ),
+          ElevatedButton(onPressed: () { }, child: const Text('Buy')),
+          ElevatedButton(onPressed: () {}, child: const Text('ADD TO CART')),
+        ],
+      ),
+    );
+  }
+}
