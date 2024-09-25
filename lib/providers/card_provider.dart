@@ -6,6 +6,8 @@ import 'package:user_ecom_app/models/product_model.dart';
 class CardProvider with ChangeNotifier {
   List<CardModel> cardList = [];
 
+  int get totalItemsInCard => cardList.length;
+
   bool isProductInCard(String pid){
     bool tag = false;
     for (final card in cardList){
@@ -21,7 +23,7 @@ class CardProvider with ChangeNotifier {
     final cardModel = CardModel(
       productId: productModel.id!,
       name: productModel.productName,
-      price: productModel.price,
+      price: productModel.priceAfterDiscount,
       image: productModel.imageUrl,
       quantity: productModel.stock,
     );
@@ -38,7 +40,28 @@ class CardProvider with ChangeNotifier {
            return CardModel.fromMap(snapshot.docs[index].data());},);
           notifyListeners();
     },);
-
   }
+   Future<void> increaseCardQuntity(String uid, CardModel cardModel)  {
+    final newQuantity = cardModel.quantity + 1;
+    return CardDbHelper.updateCardQuntity(cardModel.productId, uid, newQuantity);
+   }
+
+   Future<void> decreaseCardQuntity(String uid, CardModel cardModel) async  {
+    if(cardModel.quantity >1){
+      final newQuantity = cardModel.quantity - 1;
+      await CardDbHelper.updateCardQuntity(cardModel.productId, uid, newQuantity);
+    }
+   }
+
+   num get getCardTotalPrice{
+     num totalPrice = 0;
+     for(final card in cardList){
+       totalPrice += card.priceWithQuantity;
+     }
+     return totalPrice;
+   }
+  // updateCardQuntitys(String pid,String uid, int quantity)  {
+  //   CardDbHelper.updateCardQuntity(pid,uid, quantity);
+  // }
 
 }

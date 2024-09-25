@@ -100,8 +100,7 @@ class ProductGridItem extends StatelessWidget {
                     return ElevatedButton(
                       onPressed: () {
                         if(isInCard){
-                          cardProvider.removeFromCard(productModel.id!,
-                              context.read<FirebaseAuthProvider>().currentUser!.uid);
+                          cardProvider.removeFromCard(context.read<FirebaseAuthProvider>().currentUser!.uid,productModel.id!);
 
                         }else{
                           cardProvider.addProductToCard(productModel,

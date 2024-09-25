@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:user_ecom_app/firebase_options.dart';
+import 'package:user_ecom_app/pages/card_page.dart';
 import 'package:user_ecom_app/pages/category_page.dart';
 import 'package:user_ecom_app/pages/login_page.dart';
 import 'package:user_ecom_app/pages/luancher_page.dart';
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
         OrderPage.routeName : (context) => const OrderPage(),
         ProductDetailPage.routeName : (context) => const ProductDetailPage(),
         UserPage.routeName : (context) => const UserPage(),
+        CardPage.routeName : (context) => const CardPage(),
       },
     );
   }

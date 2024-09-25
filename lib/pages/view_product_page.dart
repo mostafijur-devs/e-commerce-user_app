@@ -1,9 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:user_ecom_app/customswidgets/cart_badge.dart';
+import 'package:user_ecom_app/customswidgets/home_drawer.dart';
 import 'package:user_ecom_app/customswidgets/product_grid_item.dart';
 import 'package:user_ecom_app/pages/luancher_page.dart';
-import 'package:user_ecom_app/pages/product_details_page.dart';
 import 'package:user_ecom_app/providers/auth_provider.dart';
 import 'package:user_ecom_app/providers/card_provider.dart';
 import 'package:user_ecom_app/providers/product_provider.dart';
@@ -19,13 +20,11 @@ class ViewProductPage extends StatelessWidget {
     context.read<ProductProvider>().getAllCategories();
     context.read<CardProvider>().getAllCardsItemsByUser(context.read<FirebaseAuthProvider>().currentUser!.uid);
     return Scaffold(
+      drawer: HomeDrawer(),
         appBar: AppBar(
           title: const Text('View Product'),
           actions: [
-            IconButton(onPressed: () {
-              context.read<FirebaseAuthProvider>().logOut();
-              Navigator.pushReplacementNamed(context, LuancherPage.routeName);
-            }, icon: const Icon(Icons.logout))
+            Consumer<CardProvider>(builder: (context, cardProvider, child) => CartBadge(cartCount: cardProvider.totalItemsInCard,),)
           ],
         ),
         body: Consumer<ProductProvider>(

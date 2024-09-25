@@ -10,6 +10,7 @@ class DbHelper {
 
   static const String _collectionCategory = 'Categories';
   static const String _collectionProducts = 'Products';
+  static const String _collectionUser = 'Users';
 
 
   // add category
@@ -31,4 +32,5 @@ class DbHelper {
   static Future<void> updateSingleProductField(String id, String field, dynamic value) async {
     await _db.collection(_collectionProducts).doc(id).update({field: value});
   }
+
 }

@@ -29,4 +29,5 @@ class CardModel{
       quantity: map['quantity'] ?? 0,
     );
   }
+  num get priceWithQuantity => price * quantity;
 }

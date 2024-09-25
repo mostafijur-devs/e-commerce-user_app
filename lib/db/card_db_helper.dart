@@ -26,4 +26,8 @@ class CardDbHelper {
    return _db.collection(_collectionUser).doc(uid).collection(_collectionCard)
         .snapshots();
 }
+  static Future<void> updateCardQuntity(String pid,String uid, num quantity)  {
+    return _db.collection(_collectionUser).doc(uid)
+        .collection(_collectionCard).doc(pid).update({'quantity': quantity});
+  }
 }
