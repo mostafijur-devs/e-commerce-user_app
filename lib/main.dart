@@ -13,6 +13,7 @@ import 'package:user_ecom_app/pages/product_details_page.dart';
 import 'package:user_ecom_app/pages/user_page.dart';
 import 'package:user_ecom_app/pages/view_product_page.dart';
 import 'package:user_ecom_app/providers/auth_provider.dart';
+import 'package:user_ecom_app/providers/card_provider.dart';
 import 'package:user_ecom_app/providers/product_provider.dart';
 
 void main() async {
@@ -28,6 +29,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => ProductProvider(),),
       ChangeNotifierProvider(create: (context) => FirebaseAuthProvider(),),
+      ChangeNotifierProvider(create: (context) => CardProvider(),),
     ],
       child: const MyApp()));
 }

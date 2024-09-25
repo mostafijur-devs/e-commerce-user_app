@@ -5,6 +5,7 @@ import 'package:user_ecom_app/customswidgets/product_grid_item.dart';
 import 'package:user_ecom_app/pages/luancher_page.dart';
 import 'package:user_ecom_app/pages/product_details_page.dart';
 import 'package:user_ecom_app/providers/auth_provider.dart';
+import 'package:user_ecom_app/providers/card_provider.dart';
 import 'package:user_ecom_app/providers/product_provider.dart';
 
 class ViewProductPage extends StatelessWidget {
@@ -16,6 +17,7 @@ class ViewProductPage extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ProductProvider>().getAllProducts();
     context.read<ProductProvider>().getAllCategories();
+    context.read<CardProvider>().getAllCardsItemsByUser(context.read<FirebaseAuthProvider>().currentUser!.uid);
     return Scaffold(
         appBar: AppBar(
           title: const Text('View Product'),

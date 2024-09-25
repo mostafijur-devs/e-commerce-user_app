@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:user_ecom_app/models/product_model.dart';
 import 'package:user_ecom_app/pages/product_details_page.dart';
+import 'package:user_ecom_app/providers/auth_provider.dart';
+import 'package:user_ecom_app/providers/card_provider.dart';
 import 'package:user_ecom_app/utils/constant.dart';
 
 class ProductGridItem extends StatelessWidget {
@@ -13,7 +16,8 @@ class ProductGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, ProductDetailPage.routeName,arguments: productModel.id);
+        Navigator.pushNamed(context, ProductDetailPage.routeName,
+            arguments: productModel.id);
       },
       child: Card(
         child: Stack(
@@ -89,23 +93,43 @@ class ProductGridItem extends StatelessWidget {
                       fontSize: 20,
                     ),
                   ),
-                ElevatedButton(onPressed: () { }, child: const Text('Buy')),
-                ElevatedButton(onPressed: () {}, child: const Text('ADD TO CART')),
+                ElevatedButton(onPressed: () {}, child: const Text('Buy')),
+                Consumer<CardProvider>(
+                  builder: (context, cardProvider, child) {
+                    final isInCard = cardProvider.isProductInCard(productModel.id!);
+                    return ElevatedButton(
+                      onPressed: () {
+                        if(isInCard){
+                          cardProvider.removeFromCard(productModel.id!,
+                              context.read<FirebaseAuthProvider>().currentUser!.uid);
+
+                        }else{
+                          cardProvider.addProductToCard(productModel,
+                              context.read<FirebaseAuthProvider>().currentUser!.uid);
+                        }
+                      },
+                      child: isInCard ? const Text('Remove From Cart') : const Text('ADD TO CART'),
+                    );
+                  },
+                ),
               ],
             ),
-            if(productModel.stock == 0) Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-
-              color: Colors.black.withOpacity(0.4),
-              child: const Text(
-                'OUT OF STOCK',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold),
-              ),
-            )
+            if (productModel.stock == 0)
+              Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                color: Colors.black.withOpacity(0.2),
+                child: Card(
+                  elevation: 20,
+                  child: const Text(
+                    'OUT OF STOCK',
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              )
           ],
         ),
       ),

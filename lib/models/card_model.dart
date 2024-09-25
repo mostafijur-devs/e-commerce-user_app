@@ -1,7 +1,7 @@
 class CardModel{
   final String productId;
   final String name;
-  final String price;
+  final num price;
   final String image;
   final num quantity;
   CardModel({
